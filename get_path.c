@@ -7,7 +7,7 @@
  * Return: zilch
  */
 
-void get_path(p_n **list_path, char **en)
+void get_path(path_node **list_path, char **en)
 {
 	char *variable_env =  NULL, *copyvari;
 	int i;

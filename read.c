@@ -30,6 +30,110 @@ int num_tokens(char **buffer, ssize_t read)
 }
 
 /**
+* count_sign_command - add to buffer
+* @buff: range of m to store
+* @read: input to find
+* Return: zilch
+*/
+
+int count_sign_command(char **buff, ssize_t *read)
+{
+	int i = 0, j = 0, sign_commands = 0, flag_deli = 0;
+	char *all_f_gene[] = {">>", ">", "<<", "<", "||", "|", ";", "&&", NULL};
+	char **all_flags = all_f_gene;
+
+	for (i = 0; i < *read; i++)
+	{
+		flag_deli = 0;
+		for (j = 0; all_f_gene[j]; j++)
+		{
+			if (!_strcmp(&((*buff)[i]), all_flags[j]) && i - 1 >= 0 &&
+				(*buff)[i] != (*buff)[i - 1])
+			{
+				flag_deli = 1;
+				break;
+			}
+		}
+		if (flag_deli)
+			sign_commands++;
+	}
+	return (sign_commands);
+}
+
+/**
+* copy_in_new_buffer - add to buffer
+* @buff: range of m to store
+* @read: input to find
+* @new_buff: create new space
+* Return: zilch
+*/
+
+int copy_in_new_buffer(char **buff, ssize_t *read, char **new_buff)
+{
+	int i = 0, j = 0, flag_deli = 0, add_spaces = 0, num_sign = 0;
+	char *all_f_gene[] = {">>", ">", "<<", "<", "||", "|", ";", "&&", NULL};
+	char **all_flags = all_f_gene;
+
+	for (i = 0; i < *read; i++)
+	{
+		flag_deli = 0, num_sign = 0;
+		for (j = 0; all_f_gene[j]; j++)
+		{
+			if (!_strcmp(&((*buff)[i]), all_flags[j]) && i - 1 >= 0 &&
+				(*buff)[i] != (*buff)[i - 1])
+			{
+				flag_deli = 1;
+				for (num_sign = 0; all_flags[j][num_sign] != '\0'; num_sign++)
+					continue;
+				break;
+			}
+		}
+		if (flag_deli)
+		{
+			(*new_buff)[i + add_spaces] = ' ';
+			if (num_sign == 1)
+			{
+				(*new_buff)[i + add_spaces + 1] = (*buff)[i];
+				(*new_buff)[i + add_spaces + 2] = ' ';
+			}
+			else
+			{
+				(*new_buff)[i + add_spaces + 1] = (*buff)[i];
+				(*new_buff)[i + add_spaces + 2] = (*buff)[i];
+				(*new_buff)[i + add_spaces + 3] = ' ', i++;
+			}
+			add_spaces += 2;
+		}
+		else
+			(*new_buff)[i + add_spaces] = (*buff)[i];
+	}
+	(*new_buff)[i + add_spaces] = '\0';
+	return (add_spaces);
+}
+
+/**
+* sure_separate_commands - add to buffer
+* @buff: range of m to store
+* @read: input to find
+* Return: zilch
+*/
+
+int sure_separate_commands(char **buff, ssize_t *read)
+{
+	int sign_commands = 0, add_spaces = 0;
+	char *new_buff = NULL;
+
+	sign_commands = count_sign_command(buff, read);
+	if (!sign_commands)
+		return (0);
+	new_buff = malloc(sizeof(char) * ((2 * sign_commands) + *read + 1));
+	add_spaces = copy_in_new_buffer(buff, read, &new_buff);
+	free(*buff);
+	*buff = new_buff, *read += add_spaces;
+	return (0);
+}
+
+/**
 * readsh - parser of user input
 * @buff: buffer to store user data
 * @len: lenght of buffer

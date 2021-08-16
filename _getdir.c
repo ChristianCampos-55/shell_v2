@@ -3,25 +3,26 @@
 /**
  * _getpathdir - gets PATH directories
  * @path: PATH
- * @env: environment variable
+ * @en: environment variable
  * Return: node of head of parsed list
  */
-p_n *_getpathdir(char *path, char **env)
+
+path_node *_getpathdir(char *path, char **en)
 {
 	char *token;
-	p_n *head = NULL;
-	p_n *pathNode;
+	path_node *head = NULL;
+	path_node *pathNode;
 
 	if (path == NULL)
 		return (NULL);
 
-	pathNode = malloc(sizeof(p_n));
+	pathNode = malloc(sizeof(path_node));
 	if (pathNode == NULL)
 		return (NULL);
 
 	token = strtok(path, ":");
 	if (token[0] == '\0')
-		pathNode->str = _getenv("PWD", env);
+		pathNode->str = _getenv("PWD", en);
 	else
 		pathNode->str = token;
 	pathNode->next = head;
@@ -31,7 +32,7 @@ p_n *_getpathdir(char *path, char **env)
 		token = strtok(NULL, ":");
 		if (token == NULL)
 			break;
-		pathNode = malloc(sizeof(p_n));
+		pathNode = malloc(sizeof(path_node));
 		if (pathNode == NULL)
 			return (NULL);
 		pathNode->str = token;

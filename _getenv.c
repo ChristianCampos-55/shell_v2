@@ -3,27 +3,28 @@
 /**
  * _getenv - gets env var information
  * @variable_env: var to get information for
- * @env: parsed env variable
+ * @en: parsed env variable
  * Return: var information or NULL
  */
-char *_getenv(const char *variable_env, char **env)
+
+char *_getenv(const char *variable_env, char **en)
 {
 	int i, j, flag = 1;
 
-	if (env == NULL)
+	if (en == NULL)
 		return (NULL);
-	for (i = 0; env[i] != NULL; i++, flag = 1)
+	for (i = 0; en[i] != NULL; i++, flag = 1)
 	{
-		for (j = 0; env[i][j] != '='; j++)
+		for (j = 0; en[i][j] != '='; j++)
 		{
-			if (variable_env[j] != env[i][j])
+			if (variable_env[j] != en[i][j])
 			{
 				flag = 0;
 				break;
 			}
 		}
 		if (flag != 0)
-			return (&(env[i][j + 1]));
+			return (&(en[i][j + 1]));
 	}
 	return (NULL);
 }
