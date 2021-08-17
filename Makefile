@@ -1,11 +1,11 @@
-OBJDIR = targets/
 CFLAGS = -Wall -Wextra -Werror -pedantic -g
 OBJ = $(addprefix $(OBJDIR), $(patsubst %.c, %.o, $(wildcard *.c)))
 CFILES = $(wildcard *.c)
 
-hsh: $(OBJDIR) $(OBJ)
 
+hsh: $(OBJ)
 	gcc $(CFLAGS) -o hsh $(OBJ)
+	make clean
 
 $(OBJDIR)%.o: %.c headersh.h
 	gcc $(CFLAGS) -c $< -o $@
@@ -19,4 +19,4 @@ all : hsh
 
 .PHONY: clean
 clean:
-	@rm -rf $(OBJDIR)
+	@rm *.o
