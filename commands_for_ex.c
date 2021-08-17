@@ -1,7 +1,7 @@
 #include "shell_header.h"
 
 /**
-* sign_com_pos - index of delimitre
+* sign_com_pos - index of delimiter
 * @next_deli: next
 * Return: index of delimiter
 */
