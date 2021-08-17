@@ -66,46 +66,21 @@ typedef struct op
 		dlistint_t **, char ***tok_com, dlistint_t *);
 } op_t;
 
-
-char *_strcat(char *dest, char *src);
 int _strlen(char *st);
-char *_itoa(int num, char *strnum);
-int _strcmp(char *s1, char *s2);
-int _strcmp_c(char *s1, char *s2);
-int _strcmp_n(char *s1, char *s2, int n);
-char *_strcpy(char *s1);
-int simple_sh(char **av, char ***en);
-int readsh(char **buffer, int *len);
-void parsesh(char **buffer, int *len, char ***tokens, int *status);
-int createandexesh(char ***, int *, char ***, char **, int *,
-	dlistint_t **, char ***, dlistint_t *);
-char *_getenv(const char *variable_env, char **en);
-path_node *_getpathdir(char *path, char **);
-int add_path(char ***tokens, char **en);
-void get_path(path_node **list_path, char **en);
-void free_list(path_node *list_path);
-void free_all(char **buffer, char ***tokens, dlistint_t **head);
-void print_error_builtin(char *av, int cc, char **token, char *errmsg);
-void open_errors(char *av, int cc, char *tok, int errmsg);
-void print_error(char *av, int cc, char *tok, int errmsg);
-int built_ins_sh(char ***tokens, char ***, char **, int *, char **,
-	int *, dlistint_t **head, char ***tok_com, dlistint_t *);
-int env(char ***en, char ***tokens, char **buffer, int *statuss, char **av,
-	int *cc, dlistint_t **head, char ***tok_com, dlistint_t *cur_node);
-int _setenv(char ***en, char ***tokens, char **buffer, int *, char **,
-	int *, dlistint_t **head, char ***tok_com, dlistint_t *cur_node);
-int _unsetenv(char ***en, char ***tokens, char **, int *, char **,
-	int *, dlistint_t **head, char ***tok_com, dlistint_t *cur_node);
 char **envdup(char **env);
 void freeenv(char **env);
-int save_mul_commands(dlistint_t **head, char ***tokens, int *status);
-dlistint_t *add_dnodeint_end(dlistint_t **head);
+char *_strcpy(char *s1);
+int _strcmp(char *s1, char *s2);
+char *_itoa(int num, char *strnum);
+char *_strcat(char *dest, char *src);
+int _strcmp_c(char *s1, char *s2);
+int _strcmp_n(char *s1, char *s2, int n);
+int simple_sh(char **av, char ***en);
+int readsh(char **buffer, int *len);
+int add_path(char ***tokens, char **en);
+void free_list(path_node *list_path);
 void free_dlistint(dlistint_t *head);
-int exe_mul_commands(char ***tokens, int *cc, char ***en, char **av,
-	int *status, dlistint_t **head);
-int realloc_buffer(char **buffer, char *str);
 int create_pipe(int(*pipefd)[2]);
-int read_command_output(int *pipefd, dlistint_t *cur_node);
 int change_output_command(int *pipefd);
 int set_normal_stdout(int stdout_copy);
 int stdout_to_file(char *filename);
@@ -113,6 +88,18 @@ int stdout_to_end_file(char *filename);
 int set_normal_stdin(int stdin_copy);
 int stdout_to_stdin(int *pipefd);
 int stdin_to_file(char *filename);
+int realloc_buffer(char **buffer, char *str);
+path_node *_getpathdir(char *path, char **);
+char *_getenv(const char *variable_env, char **en);
+void get_path(path_node **list_path, char **en);
+dlistint_t *add_dnodeint_end(dlistint_t **head);
+void open_errors(char *av, int cc, char *tok, int errmsg);
+void print_error(char *av, int cc, char *tok, int errmsg);
+int read_command_output(int *pipefd, dlistint_t *cur_node);
+void free_all(char **buffer, char ***tokens, dlistint_t **head);
+int save_mul_commands(dlistint_t **head, char ***tokens, int *status);
+void print_error_builtin(char *av, int cc, char **token, char *errmsg);
+void parsesh(char **buffer, int *len, char ***tokens, int *status);
 int redir_output_append(dlistint_t **head, char ***tok_com, int *status);
 int redir_output(dlistint_t **head, char ***tok_com, int *status);
 int or_condition(char ***tokens, int *cc, char ***en, char **av,
@@ -127,5 +114,16 @@ int redir_input(char ***tokens, int *cc, char ***en, char **av,
 	int *status, dlistint_t **head, char ***tok_com, dlistint_t *copy_head);
 int redir_input_heredoc(char ***tokens, int *cc, char ***en, char **av,
 	int *status, dlistint_t **head, char ***tok_com, dlistint_t *copy_head);
-
+int exe_mul_commands(char ***tokens, int *cc, char ***en, char **av,
+	int *status, dlistint_t **head);
+int built_ins_sh(char ***tokens, char ***, char **, int *, char **,
+	int *, dlistint_t **head, char ***tok_com, dlistint_t *);
+int env(char ***en, char ***tokens, char **buffer, int *statuss, char **av,
+	int *cc, dlistint_t **head, char ***tok_com, dlistint_t *cur_node);
+int _setenv(char ***en, char ***tokens, char **buffer, int *, char **,
+	int *, dlistint_t **head, char ***tok_com, dlistint_t *cur_node);
+int _unsetenv(char ***en, char ***tokens, char **, int *, char **,
+	int *, dlistint_t **head, char ***tok_com, dlistint_t *cur_node);
+int createandexesh(char ***, int *, char ***, char **, int *,
+	dlistint_t **, char ***, dlistint_t *);
 #endif

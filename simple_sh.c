@@ -83,29 +83,20 @@ int simple_sh(char **av, char ***en)
 
 	signal(SIGINT, ctrlc);
 	do {
-		/*Count all iterations*/
 		cont_com++;
-		/*Set all parameter in zero*/
 		set_all(&buffer, &tokens, &stat, &head);
-		/*Interactive shell prompt*/
 		if (isatty(STDIN_FILENO))
 			write(1, "($)", 4);
-		/*READ section*/
 		stat = readsh(&buffer, &len);
-		/*Breaks cases*/
 		if (stat == 1 || stat == 2)
 			free(buffer);
 		if (stat == 1)
 			continue;
 		if (stat == 2)
 			return (status);
-		/*Parse section*/
 		parsesh(&buffer, &len, &tokens, &status);
-		/*Save multiples lines*/
 		save_mul_commands(&head, &tokens, &status);
-		/*Create/Execute Section*/
 		exe_mul_commands(&tokens, &cont_com, en, av, &status, &head);
-		/*End of program*/
 		free_all(&buffer, &tokens, &head);
 	} while (1);
 	return (0);
